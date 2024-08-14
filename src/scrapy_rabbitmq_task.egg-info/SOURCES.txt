@@ -1,0 +1,16 @@
+MANIFEST.in
+README.md
+setup.py
+src/scrapy_rabbitmq_scheduler/__init__.py
+src/scrapy_rabbitmq_scheduler/connection.py
+src/scrapy_rabbitmq_scheduler/middleware.py
+src/scrapy_rabbitmq_scheduler/picklecompat.py
+src/scrapy_rabbitmq_scheduler/pipelines.py
+src/scrapy_rabbitmq_scheduler/queue.py
+src/scrapy_rabbitmq_scheduler/scheduler.py
+src/scrapy_rabbitmq_scheduler/spiders.py
+src/scrapy_rabbitmq_task.egg-info/PKG-INFO
+src/scrapy_rabbitmq_task.egg-info/SOURCES.txt
+src/scrapy_rabbitmq_task.egg-info/dependency_links.txt
+src/scrapy_rabbitmq_task.egg-info/requires.txt
+src/scrapy_rabbitmq_task.egg-info/top_level.txt
