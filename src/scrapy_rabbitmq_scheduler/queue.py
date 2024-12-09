@@ -3,7 +3,10 @@ import sys
 import time
 import pika
 import logging
-from scrapy.utils.request import request_from_dict
+try:
+    from scrapy.utils.request import request_from_dict
+except ImportError:
+    from scrapy.utils.reqser import request_to_dict, request_from_dict
 # module packages
 from . import connection
 from . import picklecompat
@@ -72,8 +75,16 @@ class RabbitMQQueue(IQueue):
 
     def _encode_request(self, request):
         """Encode a request object"""
-        obj = request_to_dict(request, self.spider)
+        try:
+            obj = request.to_dict(spider=self.spider)
+        except AttributeError:
+            obj = request_to_dict(request, self.spider)
         return self.serializer.dumps(obj)
+    
+    def _decode_request(self, encoded_request):
+        """Decode an request previously encoded"""
+        obj = self.serializer.loads(encoded_request)
+        return request_from_dict(obj, spider=self.spider)
 
     @_try_operation
     def pop(self, no_ack=False):
@@ -126,6 +137,7 @@ class RabbitMQQueue(IQueue):
         while try_time <= 10:
             try:
                 """Ack a message"""
+                print(body)
                 self.channel.basic_publish(exchange=exchange,
                                            routing_key=self.key,
                                            body=self._encode_request(body),
